@@ -8,12 +8,14 @@ const VM = require('scratch-vm');
 const Box = require('../box/box.jsx');
 const BackdropLibrary = require('../../containers/backdrop-library.jsx');
 const CostumeLibrary = require('../../containers/costume-library.jsx');
+const SoundLibrary = require('../../containers/sound-library.jsx');
 const SpriteLibrary = require('../../containers/sprite-library.jsx');
 const SpriteSelectorComponent = require('../sprite-selector/sprite-selector.jsx');
 const StageSelector = require('../../containers/stage-selector.jsx');
 
 const styles = require('./target-pane.css');
 const addIcon = require('./icon--add.svg');
+const soundIcon = require('./icon--sound-light.svg');
 
 /*
  * Pane that contains the sprite selector, sprite info, stage selector,
@@ -36,6 +38,7 @@ class TargetPane extends React.Component {
             editingTarget,
             backdropLibraryVisible,
             costumeLibraryVisible,
+            soundLibraryVisible,
             spriteLibraryVisible,
             onChangeSpriteDraggability,
             onChangeSpriteName,
@@ -44,10 +47,12 @@ class TargetPane extends React.Component {
             onChangeSpriteX,
             onChangeSpriteY,
             onDeleteSprite,
+            onNewSoundClick,
             onNewSpriteClick,
             onNewBackdropClick,
             onRequestCloseBackdropLibrary,
             onRequestCloseCostumeLibrary,
+            onRequestCloseSoundLibrary,
             onRequestCloseSpriteLibrary,
             onSelectSprite,
             stage,
@@ -82,6 +87,15 @@ class TargetPane extends React.Component {
                         onSelect={onSelectSprite}
                     />}
                     <Box>
+                        <button
+                            className={classNames(styles.addButtonWrapper, styles.addButtonWrapperSound)}
+                            onClick={onNewSoundClick}
+                        >
+                            <img
+                                className={styles.addButton}
+                                src={soundIcon}
+                            />
+                        </button>
 
                         <button
                             className={classNames(styles.addButtonWrapper, styles.addButtonWrapperSprite)}
@@ -112,6 +126,11 @@ class TargetPane extends React.Component {
                             visible={costumeLibraryVisible}
                             vm={vm}
                             onRequestClose={onRequestCloseCostumeLibrary}
+                        />
+                        <SoundLibrary
+                            visible={soundLibraryVisible}
+                            vm={vm}
+                            onRequestClose={onRequestCloseSoundLibrary}
                         />
                         <BackdropLibrary
                             visible={backdropLibraryVisible}
@@ -154,11 +173,14 @@ TargetPane.propTypes = {
     onChangeSpriteY: React.PropTypes.func,
     onDeleteSprite: React.PropTypes.func,
     onNewBackdropClick: React.PropTypes.func,
+    onNewSoundClick: React.PropTypes.func,
     onNewSpriteClick: React.PropTypes.func,
     onRequestCloseBackdropLibrary: React.PropTypes.func,
     onRequestCloseCostumeLibrary: React.PropTypes.func,
+    onRequestCloseSoundLibrary: React.PropTypes.func,
     onRequestCloseSpriteLibrary: React.PropTypes.func,
     onSelectSprite: React.PropTypes.func,
+    soundLibraryVisible: React.PropTypes.bool,
     spriteLibraryVisible: React.PropTypes.bool,
     sprites: React.PropTypes.objectOf(spriteShape),
     stage: spriteShape,

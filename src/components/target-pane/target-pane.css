@@ -3,15 +3,15 @@
 .target-pane {
     /* Makes columns for the sprite library selector + and the stage selector */
     display: flex;
-    flex-direction: row; 
-    
+    flex-direction: row;
+
     height: 100%;
 }
 
 .stage-selector-wrapper {
     flex-basis: 72px;
     flex-shrink: 0;
-    margin-left: calc($space / 2); 
+    margin-left: calc($space / 2);
 }
 
 .add-button-wrapper {
@@ -27,7 +27,7 @@
     border: 0;
     border-radius: 50% !important;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-    transition: all 0.15s ease-out; /* @todo: standardize with var */ 
+    transition: all 0.15s ease-out; /* @todo: standardize with var */
     cursor: pointer;
 }
 
@@ -49,3 +49,4 @@
 .add-button-wrapper--sprite   { right: 7rem; }
 .add-button-wrapper--stage    { right: 1.6rem; }
 .add-button-wrapper--costume  { right: 1.6rem; }
+.add-button-wrapper--sound    { right: 10rem; } /* @todo definitely do not want sound button here */
