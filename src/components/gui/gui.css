@@ -21,24 +21,82 @@
     height: 100%;
 }
 
-.blocks-wrapper {
-    /*
-        scratch-blocks is based on absolute positioning, which injects
-        inside this element and becomes the child
-    */
-    position: relative;
-
+.editor-wrapper {
     flex-basis: 600px;
     flex-grow: 1;
     flex-shrink: 0;
+    position: relative;
 
-    /*
-        Normally we'd use padding, but the absolute positioning ignores it,
-        so use margin instead. Temporary, until tabs are inserted.
-    */
-    margin-top: $stage-menu-height;
+    display: flex;
+    flex-direction: column;
+}
 
+.tab-list {
+    height: $stage-menu-height;
+    display: flex;
+    align-items: flex-end;
+}
+
+.tab-list-item {
+    padding: 0.25rem 0.5rem;
+    background: #eee;
+    cursor: pointer;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.tab-list-item:first-of-type {
+    margin-left: 0.5rem;
+    border-left: 1px solid #ddd;
+    border-top-left-radius: 0.125rem;
+}
+
+.tab-list-item:last-of-type {
+    border-top-right-radius: 0.125rem;
+}
+
+.active-tab-list-item {
+    background: #fff;
+}
+
+.tabs {
     background: #e8edf1;
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+}
+
+.tab-wrapper {
+    position: fixed;
+    top: -100000px;
+    left: -10000px;
+
+    flex-grow: 0;
+    flex-shrink: 1;
+    display: flex;
+}
+
+.active-tab-wrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.blocks-wrapper {
+    flex-grow: 1;
+    position: relative;
+}
+
+.sounds-wrapper, .costumes-wrapper {
+    border: 1px solid #ddd;
+    border-top-right-radius: 0.75rem;
+    background: #F9F9F9;
+    flex-grow: 1;
 }
 
 .stage-and-target-wrapper {
