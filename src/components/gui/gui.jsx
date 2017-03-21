@@ -16,6 +16,8 @@ const costumeIcon = require('./icon--costume.svg');
 const soundIcon = require('./icon--sound.svg');
 const addIcon = require('../target-pane/icon--add.svg');
 
+const CloseButton = require('../close-button/close-button.jsx');
+
 class GUIComponent extends React.Component {
     constructor (props) {
         super(props);
@@ -44,6 +46,9 @@ class GUIComponent extends React.Component {
             children,
             vm,
             target,
+            onNewSoundClick,
+            onNewCostumeClick,
+            onNewBackdropClick,
             ...componentProps
         } = this.props;
 
@@ -56,6 +61,7 @@ class GUIComponent extends React.Component {
         }
 
         const costumeWord = vm.editingTarget && vm.editingTarget.isStage ? 'Backdrop' : 'Costume';
+        const newCostume = vm.editingTarget && vm.editingTarget.isStage ? onNewBackdropClick : onNewCostumeClick;
 
         return (
             <Box
@@ -115,16 +121,31 @@ class GUIComponent extends React.Component {
                                 >
                                     <Box className={styles.costumesWrapper}>
                                         <Box className={styles.sidebarArea}>
-                                            <Box className={styles.newArea}>
+                                            <Box onClick={newCostume} className={styles.newArea}>
                                                 <Box className={styles.addButton}><img src={addIcon} /></Box>
                                                 <Box>Add a {costumeWord.toLowerCase()}</Box>
                                             </Box>
                                             <Box className={styles.listArea}>
-                                                {vm.editingTarget ? vm.editingTarget.sprite.costumes.map((costume) => {
+                                                {vm.editingTarget ? vm.editingTarget.sprite.costumes.map((costume, i) => {
                                                     return (
                                                         <Box className={styles.listItem}>
                                                             <img src={costume.skin} />
                                                             <div>{costume.name}</div>
+                                                            {vm.editingTarget.sprite.costumes.length > 1 ? (
+                                                                <CloseButton
+                                                                    size={CloseButton.SIZE_SMALL}
+                                                                    className={styles.deleteButton}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        if (i === vm.editingTarget.currentCostume) {
+                                                                            vm.editingTarget.setCostume(i - 1);
+                                                                        }
+                                                                        vm.editingTarget.sprite.costumes = vm.editingTarget.sprite.costumes.slice(0, i).concat(vm.editingTarget.sprite.costumes.slice(i + 1));
+                                                                        vm.emitTargetsUpdate();
+                                                                        vm.runtime.requestRedraw();
+                                                                    }}
+                                                                />
+                                                            ) : null}
                                                         </Box>
                                                     )
                                                 }): null}
@@ -142,16 +163,29 @@ class GUIComponent extends React.Component {
                                 >
                                     <Box className={styles.soundsWrapper}>
                                         <Box className={styles.sidebarArea}>
-                                            <Box className={styles.newArea}>
+                                            <Box onClick={onNewSoundClick} className={styles.newArea}>
                                                 <Box className={styles.addButton}><img src={addIcon} /></Box>
                                                 <Box>Add a sound</Box>
                                             </Box>
                                             <Box className={styles.listArea}>
-                                                {vm.editingTarget ? vm.editingTarget.sprite.sounds.map((sound) => {
+                                                {vm.editingTarget ? vm.editingTarget.sprite.sounds.map((sound, i) => {
                                                     return (
-                                                        <Box className={styles.listItem}>
+                                                        <Box
+                                                            className={styles.listItem}
+                                                            onClick={() => vm.editingTarget.audioPlayer.playSound(sound.md5)}
+                                                        >
                                                             <img src={soundIcon} />
                                                             <div>{sound.name}</div>
+                                                            {vm.editingTarget.sprite.sounds.length > 1 ? (
+                                                            <CloseButton
+                                                                size={CloseButton.SIZE_SMALL}
+                                                                className={styles.deleteButton}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    vm.editingTarget.sprite.sounds = vm.editingTarget.sprite.sounds.slice(0, i).concat(vm.editingTarget.sprite.sounds.slice(i + 1));
+                                                                    vm.emitTargetsUpdate();
+                                                                }}
+                                                            />) : null}
                                                         </Box>
                                                     )
                                                 }): null}

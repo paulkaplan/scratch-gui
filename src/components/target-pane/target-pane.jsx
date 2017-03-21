@@ -25,6 +25,7 @@ const soundIcon = require('./icon--sound-light.svg');
  */
 class TargetPane extends React.Component {
     shouldComponentUpdate (nextProps) {
+        console.log(nextProps)
         return (
             // Do a normal shallow compare on all props except sprites
             Object.keys(omit(nextProps, ['sprites']))
@@ -87,15 +88,6 @@ class TargetPane extends React.Component {
                         onSelect={onSelectSprite}
                     />}
                     <Box>
-                        <button
-                            className={classNames(styles.addButtonWrapper, styles.addButtonWrapperSound)}
-                            onClick={onNewSoundClick}
-                        >
-                            <img
-                                className={styles.addButton}
-                                src={soundIcon}
-                            />
-                        </button>
 
                         <button
                             className={classNames(styles.addButtonWrapper, styles.addButtonWrapperSprite)}

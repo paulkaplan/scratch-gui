@@ -22,6 +22,7 @@ class GUI extends React.Component {
     render () {
         const {
             projectData, // eslint-disable-line no-unused-vars
+            modals, 
             vm,
             ...componentProps
         } = this.props;

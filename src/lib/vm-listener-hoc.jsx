@@ -6,6 +6,15 @@ const {connect} = require('react-redux');
 
 const targets = require('../reducers/targets');
 
+const {
+    openBackdropLibrary,
+    openSoundLibrary,
+    openCostumeLibrary,
+    closeBackdropLibrary,
+    closeCostumeLibrary,
+    closeSoundLibrary
+} = require('../reducers/modals');
+
 /*
  * Higher Order Component to manage events emitted by the VM
  * @param {React.Component} WrappedComponent component to manage VM events for
@@ -94,9 +103,22 @@ const vmListenerHOC = function (WrappedComponent) {
         vm: new VM()
     };
     const mapStateToProps = state => ({
-        target: state.targets.editingTarget
+        target: state.targets,
+        modals: state.modals
     });
     const mapDispatchToProps = dispatch => ({
+        onNewBackdropClick: e => {
+            e.preventDefault();
+            dispatch(openBackdropLibrary());
+        },
+        onNewSoundClick: e => {
+            e.preventDefault();
+            dispatch(openSoundLibrary());
+        },
+        onNewCostumeClick: e => {
+            e.preventDefault();
+            dispatch(openCostumeLibrary());
+        },
         onTargetsUpdate: data => {
             dispatch(targets.updateEditingTarget(data.editingTarget));
             dispatch(targets.updateTargets(data.targetList));

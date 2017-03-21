@@ -155,6 +155,7 @@
     justify-content: center;
 
     cursor: pointer;
+    position: relative;
 }
 
 .list-item:hover {
@@ -162,7 +163,7 @@
     transition: 0.25s ease-out;
 }
 
-.list-item img {
+.list-item > img {
     max-width: 3rem;
     max-height: 3rem;
     margin-bottom: 0.5rem;
@@ -200,7 +201,11 @@
     justify-content: center;
 }
 
-
+.delete-button {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
 
 .stage-and-target-wrapper {
     /*
