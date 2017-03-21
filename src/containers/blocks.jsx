@@ -36,7 +36,7 @@ class Blocks extends React.Component {
     componentDidMount () {
         const workspaceConfig = defaultsDeep({}, Blocks.defaultOptions, this.props.options);
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
-
+        window.ws = this.workspace
         // @todo change this when blockly supports UI events
         addFunctionListener(this.workspace, 'translate', this.onWorkspaceMetricsChange);
         addFunctionListener(this.workspace, 'zoom', this.onWorkspaceMetricsChange);

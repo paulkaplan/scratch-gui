@@ -12,6 +12,10 @@ const MenuBar = require('../menu-bar/menu-bar.jsx');
 const Box = require('../box/box.jsx');
 const styles = require('./gui.css');
 
+const costumeIcon = require('./icon--costume.svg');
+const soundIcon = require('./icon--sound.svg');
+const addIcon = require('../target-pane/icon--add.svg');
+
 class GUIComponent extends React.Component {
     constructor (props) {
         super(props);
@@ -24,6 +28,9 @@ class GUIComponent extends React.Component {
     }
     handleScriptTabSelect () {
         this.setState({selectedTab: 'scripts'});
+
+        // @todo must resize blockly manually in case resize triggered while hidden
+        setTimeout(() => window.dispatchEvent(new Event('resize')));
     }
     handleSoundTabSelect () {
         this.setState({selectedTab: 'sounds'});
@@ -36,6 +43,7 @@ class GUIComponent extends React.Component {
             basePath,
             children,
             vm,
+            target,
             ...componentProps
         } = this.props;
 
@@ -46,6 +54,8 @@ class GUIComponent extends React.Component {
                 </Box>
             );
         }
+
+        const costumeWord = vm.editingTarget && vm.editingTarget.isStage ? 'Backdrop' : 'Costume';
 
         return (
             <Box
@@ -71,7 +81,7 @@ class GUIComponent extends React.Component {
                                     })}
                                     onClick={this.handleCostumeTabSelect}
                                 >
-                                    Costumes
+                                    {costumeWord}
                                 </Box>
                                 <Box
                                     className={classNames(styles.tabListItem, {
@@ -104,7 +114,25 @@ class GUIComponent extends React.Component {
                                     })}
                                 >
                                     <Box className={styles.costumesWrapper}>
-                                        <h1>Costumes</h1>
+                                        <Box className={styles.sidebarArea}>
+                                            <Box className={styles.newArea}>
+                                                <Box className={styles.addButton}><img src={addIcon} /></Box>
+                                                <Box>Add a {costumeWord.toLowerCase()}</Box>
+                                            </Box>
+                                            <Box className={styles.listArea}>
+                                                {vm.editingTarget ? vm.editingTarget.sprite.costumes.map((costume) => {
+                                                    return (
+                                                        <Box className={styles.listItem}>
+                                                            <img src={costume.skin} />
+                                                            <div>{costume.name}</div>
+                                                        </Box>
+                                                    )
+                                                }): null}
+                                            </Box>
+                                        </Box>
+                                        <Box className={styles.detailArea}>
+                                            <Box><h3>{costumeWord} detail area</h3></Box>
+                                        </Box>
                                     </Box>
                                 </Box>
                                 <Box
@@ -113,7 +141,25 @@ class GUIComponent extends React.Component {
                                     })}
                                 >
                                     <Box className={styles.soundsWrapper}>
-                                        <h1>Sounds</h1>
+                                        <Box className={styles.sidebarArea}>
+                                            <Box className={styles.newArea}>
+                                                <Box className={styles.addButton}><img src={addIcon} /></Box>
+                                                <Box>Add a sound</Box>
+                                            </Box>
+                                            <Box className={styles.listArea}>
+                                                {vm.editingTarget ? vm.editingTarget.sprite.sounds.map((sound) => {
+                                                    return (
+                                                        <Box className={styles.listItem}>
+                                                            <img src={soundIcon} />
+                                                            <div>{sound.name}</div>
+                                                        </Box>
+                                                    )
+                                                }): null}
+                                            </Box>
+                                        </Box>
+                                        <Box className={styles.detailArea}>
+                                            <Box><h3>Sound detail area</h3></Box>
+                                        </Box>
                                     </Box>
                                 </Box>
                             </Box>

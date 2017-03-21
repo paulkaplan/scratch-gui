@@ -93,7 +93,9 @@ const vmListenerHOC = function (WrappedComponent) {
         attachKeyboardEvents: true,
         vm: new VM()
     };
-    const mapStateToProps = () => ({});
+    const mapStateToProps = state => ({
+        target: state.targets.editingTarget
+    });
     const mapDispatchToProps = dispatch => ({
         onTargetsUpdate: data => {
             dispatch(targets.updateEditingTarget(data.editingTarget));
