@@ -1,22 +1,19 @@
 const React = require('react');
-const bindAll = require('lodash.bindAll')
+const bindAll = require('lodash.bindAll');
 const VM = require('scratch-vm');
 const classNames = require('classnames');
 const Blocks = require('../../containers/blocks.jsx');
+const CostumeTab = require('../../containers/costume-tab.jsx');
 const GreenFlag = require('../../containers/green-flag.jsx');
 const TargetPane = require('../../containers/target-pane.jsx');
+const SoundTab = require('../../containers/sound-tab.jsx');
 const Stage = require('../../containers/stage.jsx');
 const StopAll = require('../../containers/stop-all.jsx');
 const MenuBar = require('../menu-bar/menu-bar.jsx');
 
+
 const Box = require('../box/box.jsx');
 const styles = require('./gui.css');
-
-const costumeIcon = require('./icon--costume.svg');
-const soundIcon = require('./icon--sound.svg');
-const addIcon = require('../target-pane/icon--add.svg');
-
-const CloseButton = require('../close-button/close-button.jsx');
 
 class GUIComponent extends React.Component {
     constructor (props) {
@@ -45,10 +42,6 @@ class GUIComponent extends React.Component {
             basePath,
             children,
             vm,
-            target,
-            onNewSoundClick,
-            onNewCostumeClick,
-            onNewBackdropClick,
             ...componentProps
         } = this.props;
 
@@ -60,8 +53,7 @@ class GUIComponent extends React.Component {
             );
         }
 
-        const costumeWord = vm.editingTarget && vm.editingTarget.isStage ? 'Backdrop' : 'Costume';
-        const newCostume = vm.editingTarget && vm.editingTarget.isStage ? onNewBackdropClick : onNewCostumeClick;
+        const costumeTabLabel = vm.editingTarget && vm.editingTarget.isStage ? 'Backdrop' : 'Costume';
 
         return (
             <Box
@@ -87,7 +79,7 @@ class GUIComponent extends React.Component {
                                     })}
                                     onClick={this.handleCostumeTabSelect}
                                 >
-                                    {costumeWord}
+                                    {costumeTabLabel}
                                 </Box>
                                 <Box
                                     className={classNames(styles.tabListItem, {
@@ -119,82 +111,20 @@ class GUIComponent extends React.Component {
                                         [styles.activeTabWrapper]: this.state.selectedTab === 'costumes'
                                     })}
                                 >
-                                    <Box className={styles.costumesWrapper}>
-                                        <Box className={styles.sidebarArea}>
-                                            <Box onClick={newCostume} className={styles.newArea}>
-                                                <Box className={styles.addButton}><img src={addIcon} /></Box>
-                                                <Box>Add a {costumeWord.toLowerCase()}</Box>
-                                            </Box>
-                                            <Box className={styles.listArea}>
-                                                {vm.editingTarget ? vm.editingTarget.sprite.costumes.map((costume, i) => {
-                                                    return (
-                                                        <Box className={styles.listItem}>
-                                                            <img src={costume.skin} />
-                                                            <div>{costume.name}</div>
-                                                            {vm.editingTarget.sprite.costumes.length > 1 ? (
-                                                                <CloseButton
-                                                                    size={CloseButton.SIZE_SMALL}
-                                                                    className={styles.deleteButton}
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        if (i === vm.editingTarget.currentCostume) {
-                                                                            vm.editingTarget.setCostume(i - 1);
-                                                                        }
-                                                                        vm.editingTarget.sprite.costumes = vm.editingTarget.sprite.costumes.slice(0, i).concat(vm.editingTarget.sprite.costumes.slice(i + 1));
-                                                                        vm.emitTargetsUpdate();
-                                                                        vm.runtime.requestRedraw();
-                                                                    }}
-                                                                />
-                                                            ) : null}
-                                                        </Box>
-                                                    )
-                                                }): null}
-                                            </Box>
-                                        </Box>
-                                        <Box className={styles.detailArea}>
-                                            <Box><h3>{costumeWord} detail area</h3></Box>
-                                        </Box>
-                                    </Box>
+                                    <CostumeTab
+                                        active={this.state.selectedTab === 'costumes'}
+                                        vm={vm}
+                                    />
                                 </Box>
                                 <Box
                                     className={classNames(styles.tabWrapper, {
                                         [styles.activeTabWrapper]: this.state.selectedTab === 'sounds'
                                     })}
                                 >
-                                    <Box className={styles.soundsWrapper}>
-                                        <Box className={styles.sidebarArea}>
-                                            <Box onClick={onNewSoundClick} className={styles.newArea}>
-                                                <Box className={styles.addButton}><img src={addIcon} /></Box>
-                                                <Box>Add a sound</Box>
-                                            </Box>
-                                            <Box className={styles.listArea}>
-                                                {vm.editingTarget ? vm.editingTarget.sprite.sounds.map((sound, i) => {
-                                                    return (
-                                                        <Box
-                                                            className={styles.listItem}
-                                                            onClick={() => vm.editingTarget.audioPlayer.playSound(sound.md5)}
-                                                        >
-                                                            <img src={soundIcon} />
-                                                            <div>{sound.name}</div>
-                                                            {vm.editingTarget.sprite.sounds.length > 1 ? (
-                                                            <CloseButton
-                                                                size={CloseButton.SIZE_SMALL}
-                                                                className={styles.deleteButton}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    vm.editingTarget.sprite.sounds = vm.editingTarget.sprite.sounds.slice(0, i).concat(vm.editingTarget.sprite.sounds.slice(i + 1));
-                                                                    vm.emitTargetsUpdate();
-                                                                }}
-                                                            />) : null}
-                                                        </Box>
-                                                    )
-                                                }): null}
-                                            </Box>
-                                        </Box>
-                                        <Box className={styles.detailArea}>
-                                            <Box><h3>Sound detail area</h3></Box>
-                                        </Box>
-                                    </Box>
+                                    <SoundTab
+                                        active={this.state.selectedTab === 'sounds'}
+                                        vm={vm}
+                                    />
                                 </Box>
                             </Box>
                         </Box>
@@ -223,7 +153,8 @@ class GUIComponent extends React.Component {
             </Box>
         );
     }
-};
+}
+
 GUIComponent.propTypes = {
     basePath: React.PropTypes.string,
     children: React.PropTypes.node,

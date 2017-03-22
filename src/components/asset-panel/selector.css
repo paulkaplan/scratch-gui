@@ -1,0 +1,59 @@
+
+.wrapper {
+    width: 200px;
+    position: relative;
+}
+
+.new-item {
+    background: white;
+    border-bottom: 1px solid #ddd;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 1.75rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.list-area {
+    position: absolute;
+    top: 60px;
+
+    height: calc(100% - 60px);
+    width: 100%;
+
+    overflow-y: scroll;
+}
+
+.list-item {
+    width: 5rem;
+    min-height: 4rem;
+    margin: 1rem auto;
+}
+
+
+.add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: #4c97ff;
+    border: 0;
+    border-radius: 50% !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.15s ease-out; /* @todo: standardize with var */
+    cursor: pointer;
+    margin-right: 0.75rem;
+}
+
+.add-button img {
+    margin: auto;
+    height: 0.8rem;
+}
+
+.delete-button {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}

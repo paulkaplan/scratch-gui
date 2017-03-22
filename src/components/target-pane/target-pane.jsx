@@ -15,7 +15,6 @@ const StageSelector = require('../../containers/stage-selector.jsx');
 
 const styles = require('./target-pane.css');
 const addIcon = require('./icon--add.svg');
-const soundIcon = require('./icon--sound-light.svg');
 
 /*
  * Pane that contains the sprite selector, sprite info, stage selector,
