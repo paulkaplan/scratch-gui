@@ -9,7 +9,7 @@
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1)\"",
     "lint": "eslint . --ext .js,.jsx",
     "start": "webpack-dev-server",
-    "test": "npm run lint && npm run build"
+    "test": "npm run lint && npm run build && ./node_modules/.bin/tap ./test/selenium/*.js"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
@@ -66,9 +66,11 @@
     "scratch-render": "^0.1.0-prerelease.0",
     "scratch-storage": "^0.2.0",
     "scratch-vm": "^0.1.0-prerelease.0",
+    "selenium-webdriver": "^3.4.0",
     "style-loader": "^0.18.0",
     "svg-to-image": "1.1.3",
     "svg-url-loader": "2.0.2",
+    "tap": "^10.3.3",
     "travis-after-all": "^1.4.4",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.1",
