@@ -28,6 +28,7 @@ const GUIComponent = props => {
         tabIndex,
         ...componentProps
     } = props;
+    window.vm = vm;
     if (children) {
         return (
             <Box {...componentProps}>
