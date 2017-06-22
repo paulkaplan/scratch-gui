@@ -5,6 +5,7 @@ const bindAll = require('lodash.bindall');
 const VM = require('scratch-vm');
 
 const AssetPanel = require('../components/asset-panel/asset-panel.jsx');
+const SoundEditor = require('./sound-editor.jsx');
 const soundIcon = require('../components/asset-panel/icon--sound.svg');
 const addSoundFromLibraryIcon = require('../components/asset-panel/icon--add-sound-lib.svg');
 const addSoundFromRecordingIcon = require('../components/asset-panel/icon--add-sound-record.svg');
@@ -43,8 +44,6 @@ class SoundTab extends React.Component {
     }
 
     handleSelectSound (soundIndex) {
-        const sound = this.props.vm.editingTarget.sprite.sounds[soundIndex];
-        this.props.vm.editingTarget.audioPlayer.playSound(sound.md5);
         this.setState({selectedSoundIndex: soundIndex});
     }
 
@@ -93,6 +92,9 @@ class SoundTab extends React.Component {
                 onDeleteClick={this.handleDeleteSound}
                 onItemClick={this.handleSelectSound}
             >
+                {target.sounds ? (
+                    <SoundEditor soundIndex={this.state.selectedSoundIndex} />
+                ) : null}
                 {this.props.soundRecorderVisible ? (
                     <RecordModal />
                 ) : null}
