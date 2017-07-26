@@ -27,12 +27,6 @@ const TargetPane = ({
     costumeLibraryVisible,
     soundLibraryVisible,
     spriteLibraryVisible,
-    onChangeSpriteDirection,
-    onChangeSpriteName,
-    onChangeSpriteRotationStyle,
-    onChangeSpriteVisibility,
-    onChangeSpriteX,
-    onChangeSpriteY,
     onDeleteSprite,
     onNewSpriteClick,
     onNewBackdropClick,
@@ -54,12 +48,6 @@ const TargetPane = ({
         <SpriteSelectorComponent
             selectedId={editingTarget}
             sprites={sprites}
-            onChangeSpriteDirection={onChangeSpriteDirection}
-            onChangeSpriteName={onChangeSpriteName}
-            onChangeSpriteRotationStyle={onChangeSpriteRotationStyle}
-            onChangeSpriteVisibility={onChangeSpriteVisibility}
-            onChangeSpriteX={onChangeSpriteX}
-            onChangeSpriteY={onChangeSpriteY}
             onDeleteSprite={onDeleteSprite}
             onSelectSprite={onSelectSprite}
         />
@@ -145,12 +133,6 @@ TargetPane.propTypes = {
     backdropLibraryVisible: PropTypes.bool,
     costumeLibraryVisible: PropTypes.bool,
     editingTarget: PropTypes.string,
-    onChangeSpriteDirection: PropTypes.func,
-    onChangeSpriteName: PropTypes.func,
-    onChangeSpriteRotationStyle: PropTypes.func,
-    onChangeSpriteVisibility: PropTypes.func,
-    onChangeSpriteX: PropTypes.func,
-    onChangeSpriteY: PropTypes.func,
     onDeleteSprite: PropTypes.func,
     onNewBackdropClick: PropTypes.func,
     onNewSpriteClick: PropTypes.func,

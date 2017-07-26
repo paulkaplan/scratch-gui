@@ -2,6 +2,8 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {connect} from 'react-redux';
+
 import SpriteInfoComponent from '../components/sprite-info/sprite-info.jsx';
 
 class SpriteInfo extends React.Component {
@@ -48,4 +50,13 @@ SpriteInfo.propTypes = {
     y: PropTypes.number
 };
 
-export default SpriteInfo;
+const mapStateToProps = state => ({
+    onChangeDirection: direction => state.vm.postSpriteInfo({direction}),
+    onChangeX: x => state.vm.postSpriteInfo({x}),
+    onChangeY: y => state.vm.postSpriteInfo({y}),
+    onChangeVisibility: visible => state.vm.postSpriteInfo({visible}),
+    onChangeRotationStyle: rotationStyle => state.vm.postSpriteInfo({rotationStyle}),
+    onChangeName: name => state.vm.renameSprite(state.targets.editingTarget, name)
+});
+
+export default connect(mapStateToProps)(SpriteInfo);

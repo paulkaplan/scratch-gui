@@ -18,33 +18,9 @@ class TargetPane extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleChangeSpriteDirection',
-            'handleChangeSpriteName',
-            'handleChangeSpriteRotationStyle',
-            'handleChangeSpriteVisibility',
-            'handleChangeSpriteX',
-            'handleChangeSpriteY',
             'handleDeleteSprite',
             'handleSelectSprite'
         ]);
-    }
-    handleChangeSpriteDirection (direction) {
-        this.props.vm.postSpriteInfo({direction});
-    }
-    handleChangeSpriteName (name) {
-        this.props.vm.renameSprite(this.props.editingTarget, name);
-    }
-    handleChangeSpriteRotationStyle (rotationStyle) {
-        this.props.vm.postSpriteInfo({rotationStyle});
-    }
-    handleChangeSpriteVisibility (visible) {
-        this.props.vm.postSpriteInfo({visible});
-    }
-    handleChangeSpriteX (x) {
-        this.props.vm.postSpriteInfo({x});
-    }
-    handleChangeSpriteY (y) {
-        this.props.vm.postSpriteInfo({y});
     }
     handleDeleteSprite (id) {
         this.props.vm.deleteSprite(id);
@@ -56,12 +32,6 @@ class TargetPane extends React.Component {
         return (
             <TargetPaneComponent
                 {...this.props}
-                onChangeSpriteDirection={this.handleChangeSpriteDirection}
-                onChangeSpriteName={this.handleChangeSpriteName}
-                onChangeSpriteRotationStyle={this.handleChangeSpriteRotationStyle}
-                onChangeSpriteVisibility={this.handleChangeSpriteVisibility}
-                onChangeSpriteX={this.handleChangeSpriteX}
-                onChangeSpriteY={this.handleChangeSpriteY}
                 onDeleteSprite={this.handleDeleteSprite}
                 onSelectSprite={this.handleSelectSprite}
             />

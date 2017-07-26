@@ -8,12 +8,6 @@ import styles from './sprite-selector.css';
 
 const SpriteSelectorComponent = function (props) {
     const {
-        onChangeSpriteDirection,
-        onChangeSpriteName,
-        onChangeSpriteRotationStyle,
-        onChangeSpriteVisibility,
-        onChangeSpriteX,
-        onChangeSpriteY,
         onDeleteSprite,
         onSelectSprite,
         selectedId,
@@ -40,12 +34,6 @@ const SpriteSelectorComponent = function (props) {
                 visible={selectedSprite.visible}
                 x={selectedSprite.x}
                 y={selectedSprite.y}
-                onChangeDirection={onChangeSpriteDirection}
-                onChangeName={onChangeSpriteName}
-                onChangeRotationStyle={onChangeSpriteRotationStyle}
-                onChangeVisibility={onChangeSpriteVisibility}
-                onChangeX={onChangeSpriteX}
-                onChangeY={onChangeSpriteY}
             />
 
             <Box className={styles.scrollWrapper}>
@@ -74,12 +62,6 @@ const SpriteSelectorComponent = function (props) {
 };
 
 SpriteSelectorComponent.propTypes = {
-    onChangeSpriteDirection: PropTypes.func,
-    onChangeSpriteName: PropTypes.func,
-    onChangeSpriteRotationStyle: PropTypes.func,
-    onChangeSpriteVisibility: PropTypes.func,
-    onChangeSpriteX: PropTypes.func,
-    onChangeSpriteY: PropTypes.func,
     onDeleteSprite: PropTypes.func,
     onSelectSprite: PropTypes.func,
     selectedId: PropTypes.string,
