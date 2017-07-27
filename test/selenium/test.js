@@ -1,5 +1,4 @@
 /* eslint-env jest */
-
 const path = require('path');
 const webdriver = require('selenium-webdriver');
 const {By, until} = webdriver;
@@ -34,7 +33,7 @@ describe('costumes, sounds and variables', () => {
         driver.quit();
     });
 
-    test('opening file', () => {
+    test('opening the file', () => {
         const promise = driver.get('file://' + uri)
 
         .then(() => clickCostumeTab())
@@ -58,9 +57,13 @@ describe('costumes, sounds and variables', () => {
         .then(() => clickText('Create variable...'))
         .then(() => findByXpath("//input[@placeholder='']"))
         .then((el) => el.sendKeys('score'))
-        .then(() => clickButton('OK'));
+        .then(() => clickButton('OK'))
+        .then(() => driver.manage().logs().get('browser')) // eslint-disable-line newline-per-chained-call
+        .then(logs => {
+            expect(logs).toEqual([]);
+        });
 
-        expect(promise).resolves.not.toBe('octopus');
+
         return promise;
-    });
+    }, 20000);
 });
