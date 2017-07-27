@@ -1,41 +1,22 @@
 /* eslint-env jest */
-const path = require('path');
-const webdriver = require('selenium-webdriver');
-const {By, until} = webdriver;
-
-const uri = path.resolve(__dirname, '../../build/index.html');
-
-const driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-const clickScriptsTab = () => driver.findElement(By.id('react-tabs-0')).click();
-const clickCostumeTab = () => driver.findElement(By.id('react-tabs-2')).click();
-const clickSoundsTab = () => driver.findElement(By.id('react-tabs-4')).click();
-
-const findByXpath = (xpath) => {
-    return driver.wait(until.elementLocated(By.xpath(xpath), 5 * 1000));
-};
-
-const clickXpath = (xpath) => {
-    return findByXpath(xpath).then(el => el.click());
-};
-
-const clickText = (text) => {
-    return clickXpath(`//*[contains(text(), '${text}')]`);
-};
-const clickButton = (text) => {
-    return clickXpath(`//button[contains(text(), '${text}')]`);
-};
+import {
+    driver,
+    load,
+    clickScriptsTab,
+    clickCostumeTab,
+    clickSoundsTab,
+    findByXpath,
+    clickText,
+    clickButton
+} from './support/helpers';
 
 describe('costumes, sounds and variables', () => {
-    afterAll(() => {
+    afterEach(() => {
         driver.quit();
     });
 
     test('opening the file', () => {
-        const promise = driver.get('file://' + uri)
-
+        const promise = load()
         .then(() => clickCostumeTab())
         .then(() => clickText('Add Costume'))
         .then(() => findByXpath("//input[@placeholder='what are you looking for?']"))
@@ -62,8 +43,6 @@ describe('costumes, sounds and variables', () => {
         .then(logs => {
             expect(logs).toEqual([]);
         });
-
-
         return promise;
     }, 20000);
 });
