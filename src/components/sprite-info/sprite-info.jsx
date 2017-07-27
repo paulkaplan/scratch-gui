@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Box from '../box/box.jsx';
 import Label from '../forms/label.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
@@ -31,7 +30,7 @@ class SpriteInfo extends React.Component {
     }
     render () {
         return (
-            <Box
+            <div
                 className={styles.spriteInfo}
             >
                 <div className={classNames(styles.row, styles.rowPrimary)}>
@@ -174,7 +173,7 @@ class SpriteInfo extends React.Component {
                         </Label>
                     </div>
                 </div>
-            </Box>
+            </div>
         );
     }
 }
