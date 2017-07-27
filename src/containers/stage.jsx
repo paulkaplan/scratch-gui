@@ -18,6 +18,9 @@ class Stage extends React.Component {
             'onMouseUp',
             'onMouseMove',
             'onMouseDown',
+            'onTouchStart',
+            'onTouchMove',
+            'onTouchEnd',
             'onStartDrag',
             'onStopDrag',
             'updateRect',
@@ -49,13 +52,19 @@ class Stage extends React.Component {
     }
     attachMouseEvents (canvas) {
         document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('touchmove', this.onTouchMove);
         document.addEventListener('mouseup', this.onMouseUp);
+        document.addEventListener('touchend', this.onTouchEnd);
         canvas.addEventListener('mousedown', this.onMouseDown);
+        canvas.addEventListener('touchstart', this.onTouchStart);
     }
     detachMouseEvents (canvas) {
         document.removeEventListener('mousemove', this.onMouseMove);
+        document.removeEventListener('touchmove', this.onTouchMove);
         document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener('touchend', this.onTouchEnd);
         canvas.removeEventListener('mousedown', this.onMouseDown);
+        canvas.removeEventListener('touchstart', this.onTouchStart);
     }
     attachRectEvents () {
         window.addEventListener('resize', this.updateRect);
@@ -83,6 +92,18 @@ class Stage extends React.Component {
         const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
         if (targetId === null) return;
         this.props.vm.setEditingTarget(targetId);
+    }
+    onTouchStart (e) {
+        this.onMouseDown(e.touches[0]);
+    }
+    onTouchEnd (e) {
+        this.onMouseUp(e.changedTouches[0]);
+    }
+    onTouchMove (e) {
+        this.onMouseMove(e.touches[0]);
+        if (this.state.mouseDown) {
+            e.preventDefault();
+        }
     }
     onMouseMove (e) {
         const mousePosition = [e.clientX - this.rect.left, e.clientY - this.rect.top];
@@ -146,7 +167,9 @@ class Stage extends React.Component {
             canvasHeight: this.rect.height
         };
         this.props.vm.postIOData('mouse', data);
-        e.preventDefault();
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
     }
     cancelMouseDownTimeout () {
         if (this.state.mouseDownTimeoutId !== null) {
