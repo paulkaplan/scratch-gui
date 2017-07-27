@@ -1,5 +1,6 @@
+/* eslint-env jest */
+
 const path = require('path');
-const test = require('tap').test;
 const webdriver = require('selenium-webdriver');
 const {By, until} = webdriver;
 
@@ -27,38 +28,14 @@ const clickText = (text) => {
 const clickButton = (text) => {
     return clickXpath(`//button[contains(text(), '${text}')]`);
 };
-/* eslint-env jest */
-import React from 'react'; // eslint-disable-line no-unused-vars
-import {shallow} from 'enzyme';
-import ButtonComponent from '../../../src/components/button/button'; // eslint-disable-line no-unused-vars
-import renderer from 'react-test-renderer';
 
-describe('ButtonComponent', () => {
-    test('matches snapshot', () => {
-        const onClick = jest.fn();
-        const component = renderer.create(
-            <ButtonComponent onClick={onClick}/>
-        );
-        expect(component.toJSON()).toMatchSnapshot();
-    });
-
-    test('triggers callback when clicked', () => {
-        const onClick = jest.fn();
-        const componentShallowWrapper = shallow(
-            <ButtonComponent onClick={onClick}/>
-        );
-        componentShallowWrapper.simulate('click');
-        expect(onClick).toHaveBeenCalled();
-    });
-});
-
-describe('costumes, sounds and variables', t => {
+describe('costumes, sounds and variables', () => {
     afterAll(() => {
         driver.quit();
     });
 
     test('opening file', () => {
-        return driver.get('file://' + uri)
+        const promise = driver.get('file://' + uri)
 
         .then(() => clickCostumeTab())
         .then(() => clickText('Add Costume'))
@@ -81,6 +58,9 @@ describe('costumes, sounds and variables', t => {
         .then(() => clickText('Create variable...'))
         .then(() => findByXpath("//input[@placeholder='']"))
         .then((el) => el.sendKeys('score'))
-        .then(() => clickButton('OK'))
-    })
+        .then(() => clickButton('OK'));
+
+        expect(promise).resolves.not.toBe('octopus');
+        return promise;
+    });
 });
