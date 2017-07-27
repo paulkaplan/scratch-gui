@@ -24,7 +24,7 @@ describe('costumes, sounds and variables', () => {
         .then(logs => {
             expect(logs).toEqual([]);
         });
-    }, 10000);
+    }, 50000);
 
     test('adding a sound from the library', () => {
         return load()
@@ -38,7 +38,7 @@ describe('costumes, sounds and variables', () => {
         .then(logs => {
             expect(logs).toEqual([]);
         });
-    }, 10000);
+    }, 50000);
 
     // Skip for now because OrderedMap error causes this to fail
     test.skip('adding variables and monitors', () => {
@@ -54,7 +54,7 @@ describe('costumes, sounds and variables', () => {
         .then(logs => {
             expect(logs).toEqual([]);
         });
-    }, 10000);
+    }, 50000);
 
     afterAll(() => {
         driver.quit();
