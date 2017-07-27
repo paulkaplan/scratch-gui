@@ -13,7 +13,7 @@
     "start": "npm run i18n:msgs && webpack-dev-server",
     "unit-test": "jest",
     "integration-test": "jest ./test/selenium/*.js",
-    "test": "npm run lint && npm run unit-test && npm run build",
+    "test": "npm run lint && npm run unit-test && npm run build && npm run integration-test",
     "watch": "webpack --progress --colors --watch"
   },
   "author": "Massachusetts Institute of Technology",
