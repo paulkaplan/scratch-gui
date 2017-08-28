@@ -11,6 +11,7 @@ const reducer = function (state, action) {
     switch (action.type) {
     case UPDATE_TARGET_LIST:
         return Object.assign({}, state, {
+            editingTarget: action.target,
             sprites: action.targets
                 .filter(target => !target.isStage)
                 .reduce(
@@ -29,18 +30,10 @@ const reducer = function (state, action) {
         return state;
     }
 };
-const updateTargets = function (targetList) {
+const updateTargets = function ({targetList, editingTarget}) {
     return {
         type: UPDATE_TARGET_LIST,
         targets: targetList,
-        meta: {
-            throttle: 30
-        }
-    };
-};
-const updateEditingTarget = function (editingTarget) {
-    return {
-        type: UPDATE_EDITING_TARGET,
         target: editingTarget,
         meta: {
             throttle: 30
@@ -49,6 +42,5 @@ const updateEditingTarget = function (editingTarget) {
 };
 export {
     reducer as default,
-    updateTargets,
-    updateEditingTarget
+    updateTargets
 };
