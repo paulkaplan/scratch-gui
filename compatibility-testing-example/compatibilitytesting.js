@@ -69,7 +69,7 @@ var Player = function (_React$Component) {
 
         _this.updateProject = _this.updateProject.bind(_this);
         _this.state = {
-            projectId: window.location.hash.substring(1) || '10015059'
+            projectId: window.location.hash.substring(1) || '184100902'
         };
         return _this;
     }
