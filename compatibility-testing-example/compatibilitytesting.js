@@ -59,6 +59,8 @@ var mapStateToProps = function mapStateToProps(state) {
 var VMStage = (0, _reactRedux.connect)(mapStateToProps)(_stage2.default);
 var VMControls = (0, _reactRedux.connect)(mapStateToProps)(_controls2.default);
 
+var DEFAULT_PROJECT_ID = '10015059';
+
 var Player = function (_React$Component) {
     _inherits(Player, _React$Component);
 
@@ -68,8 +70,9 @@ var Player = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, props));
 
         _this.updateProject = _this.updateProject.bind(_this);
+
         _this.state = {
-            projectId: window.location.hash.substring(1) || '10015059'
+            projectId: window.location.hash.substring(1) || DEFAULT_PROJECT_ID
         };
         return _this;
     }
@@ -78,6 +81,9 @@ var Player = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             window.addEventListener('hashchange', this.updateProject);
+            if (!window.location.hash.substring(1)) {
+                window.location.hash = DEFAULT_PROJECT_ID;
+            }
         }
     }, {
         key: 'componentWillUnmount',
