@@ -129,6 +129,7 @@ describe('costumes, sounds and variables', () => {
     test('Load a project by ID', async () => {
         const projectId = '96708228';
         await loadUri(`${uri}#${projectId}`);
+        await clickXpath('//button[@title="tryit"]');
         await new Promise(resolve => setTimeout(resolve, 2000));
         await clickXpath('//img[@title="Go"]');
         await new Promise(resolve => setTimeout(resolve, 2000));
