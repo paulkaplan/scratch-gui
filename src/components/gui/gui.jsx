@@ -23,6 +23,7 @@ import Card from '../card/card.jsx';
 import PreviewModal from '../../containers/preview-modal.jsx';
 import ImportModal from '../../containers/import-modal.jsx';
 import WebGlModal from '../../containers/webgl-modal.jsx';
+import TipsLibrary from '../../containers/tips-library.jsx';
 
 import layout from '../../lib/layout-constants.js';
 import styles from './gui.css';
@@ -55,6 +56,7 @@ const GUIComponent = props => {
         onActivateTab,
         previewInfoVisible,
         soundsTabVisible,
+        tipsLibraryVisible,
         vm,
         ...componentProps
     } = props;
@@ -78,7 +80,7 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
-
+    console.log(tipsLibraryVisible)
     return (
         <Box
             className={styles.pageWrapper}
@@ -99,6 +101,7 @@ const GUIComponent = props => {
             {isRendererSupported ? null : (
                 <WebGlModal />
             )}
+            {tipsLibraryVisible ? <TipsLibrary /> : null}
             <Card vm={vm} />
             <MenuBar />
             <Box className={styles.bodyWrapper}>

@@ -10,11 +10,12 @@ import LoadButton from '../../containers/load-button.jsx';
 import SaveButton from '../../containers/save-button.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
 
-import {openFeedbackForm} from '../../reducers/modals';
+import {openFeedbackForm, openTipsLibrary} from '../../reducers/modals';
 
 import styles from './menu-bar.css';
 
 import feedbackIcon from './icon--feedback.svg';
+import tipIcon from './icon--tips.svg';
 import scratchLogo from './scratch-logo.svg';
 
 const MenuBar = props => (
@@ -39,18 +40,18 @@ const MenuBar = props => (
         <div className={styles.feedbackButtonWrapper}>
             <Button
                 className={styles.feedbackButton}
-                onClick={props.onGiveFeedback}
+                onClick={props.onOpenTipLibrary}
             >
                 <img
                     className={styles.feedbackButtonIcon}
                     draggable={false}
-                    src={feedbackIcon}
+                    src={tipIcon}
                 />
                 <span className={styles.feedbackText}>
                     <FormattedMessage
-                        defaultMessage="Give Feedback"
-                        description="Label for feedback form modal button"
-                        id="gui.menuBar.giveFeedback"
+                        defaultMessage="Tips"
+                        description="Label for tip button in menu bar"
+                        id="gui.menuBar.tips"
                     />
                 </span>
             </Button>
@@ -67,6 +68,9 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => ({
     onGiveFeedback: () => {
         dispatch(openFeedbackForm());
+    },
+    onOpenTipLibrary: () => {
+        dispatch(openTipsLibrary());
     }
 });
 
