@@ -8,6 +8,7 @@ import Box from '../box/box.jsx';
 import DefaultMonitor from './default-monitor.jsx';
 import LargeMonitor from './large-monitor.jsx';
 import SliderMonitor from './slider-monitor.jsx';
+import ListMonitor from './list-monitor.jsx';
 
 import styles from './monitor.css';
 
@@ -23,7 +24,8 @@ const categories = {
 const types = {
     default: DefaultMonitor,
     large: LargeMonitor,
-    slider: SliderMonitor
+    slider: SliderMonitor,
+    list: ListMonitor
 };
 
 const MonitorComponent = props => (
