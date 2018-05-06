@@ -25,6 +25,7 @@
 
 .default-monitor {
     display: flex;
+    flex-direction: column;
     padding: 3px;
 }
 
@@ -50,4 +51,9 @@
     text-align: center;
     color: white;
     font-size: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
 }

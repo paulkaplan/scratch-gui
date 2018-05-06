@@ -8,6 +8,15 @@ import {addMonitorRect, getInitialPosition, resizeMonitorRect, removeMonitorRect
 
 import {connect} from 'react-redux';
 
+const availableTypes = opcode => (
+    monitorTypes.filter(t => {
+        if (opcode === 'data_variable') {
+            return true;
+        }
+        return t !== 'slider';
+    })
+);
+
 class Monitor extends React.Component {
     constructor (props) {
         super(props);
@@ -69,10 +78,9 @@ class Monitor extends React.Component {
         );
     }
     handleNextType () {
-        // @todo the type list needs to be filtered for current available types
-        // i.e. no sliders for read-only monitors, only list type for list vars.
-        const typeIndex = monitorTypes.indexOf(this.state.type);
-        this.setState({type: monitorTypes[(typeIndex + 1) % monitorTypes.length]});
+        const types = availableTypes(this.props.opcode);
+        const typeIndex = types.indexOf(this.state.type);
+        this.setState({type: types[(typeIndex + 1) % types.length]});
     }
     handleSetTypeToDefault () {
         this.setState({type: 'default'});
@@ -88,6 +96,7 @@ class Monitor extends React.Component {
     }
     render () {
         const monitorProps = monitorAdapter(this.props);
+        const showSliderOption = availableTypes(this.props.opcode).indexOf('slider') !== -1;
         return (
             <MonitorComponent
                 componentRef={this.setElement}
@@ -97,7 +106,7 @@ class Monitor extends React.Component {
                 onNextType={this.handleNextType}
                 onSetTypeToDefault={this.handleSetTypeToDefault}
                 onSetTypeToLarge={this.handleSetTypeToLarge}
-                onSetTypeToSlider={this.handleSetTypeToSlider}
+                onSetTypeToSlider={showSliderOption ? this.handleSetTypeToSlider : null}
             />
         );
     }

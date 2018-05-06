@@ -7,6 +7,7 @@ import {ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
 import Box from '../box/box.jsx';
 import DefaultMonitor from './default-monitor.jsx';
 import LargeMonitor from './large-monitor.jsx';
+import SliderMonitor from './slider-monitor.jsx';
 
 import styles from './monitor.css';
 
@@ -21,7 +22,8 @@ const categories = {
 
 const types = {
     default: DefaultMonitor,
-    large: LargeMonitor
+    large: LargeMonitor,
+    slider: SliderMonitor
 };
 
 const MonitorComponent = props => (
@@ -59,13 +61,15 @@ const MonitorComponent = props => (
                     id="gui.monitor.contextMenu.large"
                 />
             </MenuItem>
-            <MenuItem onClick={props.onSetTypeToSlider}>
-                <FormattedMessage
-                    defaultMessage="slider"
-                    description="Menu item to switch to the slider monitor"
-                    id="gui.monitor.contextMenu.slider"
-                />
-            </MenuItem>
+            {props.onSetTypeToSlider ? (
+                <MenuItem onClick={props.onSetTypeToSlider}>
+                    <FormattedMessage
+                        defaultMessage="slider"
+                        description="Menu item to switch to the slider monitor"
+                        id="gui.monitor.contextMenu.slider"
+                    />
+                </MenuItem>
+            ) : null}
         </ContextMenu>
     </ContextMenuTrigger>
 
@@ -83,7 +87,7 @@ MonitorComponent.propTypes = {
     onNextType: PropTypes.func.isRequired,
     onSetTypeToDefault: PropTypes.func.isRequired,
     onSetTypeToLarge: PropTypes.func.isRequired,
-    onSetTypeToSlider: PropTypes.func.isRequired,
+    onSetTypeToSlider: PropTypes.func,
     type: PropTypes.oneOf(monitorTypes),
     value: PropTypes.oneOfType([
         PropTypes.string,
