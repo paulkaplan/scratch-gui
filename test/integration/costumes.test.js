@@ -30,10 +30,26 @@ describe('Working with costumes', () => {
         await clickXpath('//button[@title="tryit"]');
         await clickText('Costumes');
         await clickXpath('//button[@aria-label="Choose a Costume"]');
-        const el = await findByXpath("//input[@placeholder='Search']");
+        let el = await findByXpath("//input[@placeholder='Search']");
         await el.sendKeys('abb');
         await clickText('Abby-a'); // Should close the modal, then click the costumes in the selector
         await findByXpath("//input[@value='Abby-a']"); // Should show editor for new costume
+
+        // Empty costume
+        el = await findByXpath('//button[@aria-label="Choose a Costume"]');
+        await driver.actions().mouseMove(el)
+            .perform();
+        await driver.sleep(500); // Wait for thermometer menu to come up
+        await clickXpath('//button[@aria-label="Paint"]');
+        await driver.sleep(500); // Wait for thermometer menu to come back after costume added
+
+        // Surprise costume
+        el = await findByXpath('//button[@aria-label="Choose a Costume"]');
+        await driver.actions().mouseMove(el)
+            .perform();
+        await driver.sleep(500); // Wait for thermometer menu to come up
+        await clickXpath('//button[@aria-label="Surprise"]');
+
         const logs = await getLogs();
         await expect(logs).toEqual([]);
     });
