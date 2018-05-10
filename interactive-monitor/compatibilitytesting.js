@@ -21,7 +21,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(11);
 
-var _controls = __webpack_require__(88);
+var _controls = __webpack_require__(89);
 
 var _controls2 = _interopRequireDefault(_controls);
 
@@ -33,7 +33,7 @@ var _box = __webpack_require__(12);
 
 var _box2 = _interopRequireDefault(_box);
 
-var _gui = __webpack_require__(66);
+var _gui = __webpack_require__(67);
 
 var _gui2 = _interopRequireDefault(_gui);
 
