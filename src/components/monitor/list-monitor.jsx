@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './monitor.css';
+import ReactInfinite from 'react-infinite';
 
 const ListMonitor = ({categoryColor, label, width, height, value}) => (
     <div
@@ -18,20 +19,28 @@ const ListMonitor = ({categoryColor, label, width, height, value}) => (
                 <div className={styles.listEmpty}>
                     {'(empty)' /* @todo not translating, awaiting design */}
                 </div>
-            ) : value.map((v, i) => (
-                <div
-                    className={styles.listRow}
-                    key={`label-${i}`}
+            ) : (
+                <ReactInfinite
+                    containerHeight={(height || 200) - 44 /* Header/footer size, approx */}
+                    containerWidth={width || 80}
+                    elementHeight={24 /* Row size is same for all rows */}
                 >
-                    <div className={styles.listIndex}>{i + 1 /* one indexed */}</div>
-                    <div
-                        className={styles.listValue}
-                        style={{background: categoryColor}}
-                    >
-                        <div className={styles.valueInner}>{v}</div>
-                    </div>
-                </div>
-            ))}
+                    {value.map((v, i) => (
+                        <div
+                            className={styles.listRow}
+                            key={`label-${i}`}
+                        >
+                            <div className={styles.listIndex}>{i + 1 /* one indexed */}</div>
+                            <div
+                                className={styles.listValue}
+                                style={{background: categoryColor}}
+                            >
+                                <div className={styles.valueInner}>{v}</div>
+                            </div>
+                        </div>
+                    ))}
+                </ReactInfinite>
+            )}
         </div>
         <div className={styles.listFooter}>
             <div className={styles.footerButton}>
