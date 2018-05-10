@@ -90,27 +90,13 @@ class SeleniumHelper {
         return this.clickXpath(`//button//*[contains(text(), '${text}')]`);
     }
 
-    getLogs (whitelist) {
-        if (!whitelist) {
-            // Default whitelist
-            whitelist = [
-                'The play() request was interrupted by a call to pause()'
-            ];
-        }
+    getLogs () {
         return this.driver.manage()
             .logs()
             .get('browser')
-            .then(entries => entries.filter(entry => {
-                const message = entry.message;
-                for (let i = 0; i < whitelist.length; i++) {
-                    if (message.indexOf(whitelist[i]) !== -1) {
-                        return false;
-                    } else if (entry.level !== 'SEVERE') {
-                        return false;
-                    }
-                }
-                return true;
-            }));
+            .then(entries => entries.filter(entry => (
+                entry.message.indexOf('Uncaught Error') !== -1
+            )));
     }
 }
 

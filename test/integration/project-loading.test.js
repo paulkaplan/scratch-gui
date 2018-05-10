@@ -107,5 +107,16 @@ describe('Loading scratch gui', () => {
             const logs = await getLogs();
             await expect(logs).toEqual([]);
         });
+
+        test('Downloading projects', async () => {
+            await loadUri(uri);
+            // await driver.get('http://localhost:8601');
+            await clickXpath('//button[@title="tryit"]');
+            await clickText('File');
+            await clickText('Download to your computer');
+            await new Promise(resolve => setTimeout(resolve, 500));
+            const logs = await getLogs();
+            await expect(logs).toEqual([]);
+        });
     });
 });
