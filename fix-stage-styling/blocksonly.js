@@ -60,11 +60,11 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(7);
 
-var _controls = __webpack_require__(260);
+var _controls = __webpack_require__(261);
 
 var _controls2 = _interopRequireDefault(_controls);
 
-var _blocks = __webpack_require__(325);
+var _blocks = __webpack_require__(326);
 
 var _blocks2 = _interopRequireDefault(_blocks);
 
