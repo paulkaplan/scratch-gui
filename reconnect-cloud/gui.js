@@ -62,12 +62,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     window.onbeforeunload = function () {
       return true;
     };
-  } else {
-    window.onerror = function (e) {
-      alert('Uncaught error occurred–check the console'); // eslint-disable-line
-
-      throw e;
-    };
   }
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
