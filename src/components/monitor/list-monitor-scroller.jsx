@@ -57,6 +57,7 @@ class ListMonitorScroller extends React.Component {
                                 onChange={this.props.onInput}
                                 onFocus={this.props.onFocus}
                                 onKeyDown={this.props.onKeyPress} // key down to get ahead of blur
+                                onPaste={this.props.onPaste}
                             />
                             <div
                                 className={styles.removeButton}
@@ -105,6 +106,7 @@ ListMonitorScroller.propTypes = {
     onFocus: PropTypes.func,
     onInput: PropTypes.func,
     onKeyPress: PropTypes.func,
+    onPaste: PropTypes.func,
     onRemove: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.oneOfType([
         PropTypes.string,

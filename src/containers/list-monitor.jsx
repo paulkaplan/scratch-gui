@@ -17,6 +17,7 @@ class ListMonitor extends React.Component {
             'handleInput',
             'handleRemove',
             'handleKeyPress',
+            'handlePaste',
             'handleFocus',
             'handleAdd',
             'handleResizeMouseDown'
@@ -99,6 +100,29 @@ class ListMonitor extends React.Component {
         this.setState({activeValue: e.target.value});
     }
 
+    handlePaste (e) {
+        if (!(e.clipboardData && e.clipboardData.getData('text/plain'))) return;
+        // If we can get text from the clipboard, prevent the event from
+        // being handled by the onInput path, processing it manually for multiline
+        e.preventDefault();
+        const lines = e.clipboardData.getData('text/plain').split('\n');
+        const previouslyActiveIndex = this.state.activeIndex;
+        const {vm, targetId, id: variableId} = this.props;
+        const listValue = getVariableValue(vm, targetId, variableId);
+        const newListValue = listValue.slice(0, previouslyActiveIndex)
+            .concat(lines)
+            .concat(listValue.slice(previouslyActiveIndex + 1));
+        setVariableValue(vm, targetId, variableId, newListValue);
+        // Set the active cell to the last pasted item
+        const newIndex = this.wrapListIndex(
+            previouslyActiveIndex + lines.length - 1,
+            newListValue.length);
+        this.setState({
+            activeIndex: newIndex,
+            activeValue: newListValue[newIndex]
+        });
+    }
+
     handleRemove (e) {
         e.preventDefault(); // Default would blur input, prevent that.
         e.stopPropagation(); // Bubbling would activate, which will be handled here
@@ -175,6 +199,7 @@ class ListMonitor extends React.Component {
                 onFocus={this.handleFocus}
                 onInput={this.handleInput}
                 onKeyPress={this.handleKeyPress}
+                onPaste={this.handlePaste}
                 onRemove={this.handleRemove}
                 onResizeMouseDown={this.handleResizeMouseDown}
             />
