@@ -26,6 +26,9 @@
     border: 1px solid $ui-black-transparent;
     border-top-right-radius: $space;
     border-bottom-right-radius: $space;
+
+    /* Get browser to paint this layer separately for perf, it paints frequently */
+    transform: translateZ(0);
 }
 
 [dir="rtl"] .blocks :global(.injectionDiv) {

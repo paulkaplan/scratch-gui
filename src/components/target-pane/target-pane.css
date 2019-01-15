@@ -5,6 +5,9 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+
+    /* Get browser to paint this layer separately for perf, it paints frequently */
+    transform: translateZ(0);
 }
 
 .stage-selector-wrapper {
