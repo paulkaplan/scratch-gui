@@ -13,9 +13,9 @@ env:
 cache:
   directories:
   - node_modules
-# install:
-# - npm --production=false install
-# - npm --production=false update
+install:
+- npm --production=false install
+- npm --production=false update
 jobs:
     include:
     - script: npm run test:lint
