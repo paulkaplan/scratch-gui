@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import SeleniumHelper from '../helpers/selenium-helper';
 
 const {
@@ -179,6 +180,19 @@ describe('Working with costumes', () => {
         await findByXpath('//img[@src="https://cdn.assets.scratch.mit.edu/internalapi/asset/b6e23922f23b49ddc6f62f675e77417c.svg/get/"]');
         const logs = await getLogs();
         await expect(logs).toEqual([]);
+    });
+
+    test('Exporting a costume', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+        await clickText('Costumes');
+        await rightClickText('costume1', scope.costumesTab);
+        await driver.sleep(500); // Wait for menu to come up
+        await clickText('export', scope.costumesTab);
+
+        const filePath = path.resolve(__dirname, '../costume1.svg');
+        expect(fs.existsSync(filePath)).toEqual(true);
+        fs.unlinkSync(filePath); // Clean up by deleting the download
     });
 
 });

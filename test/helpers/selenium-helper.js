@@ -3,7 +3,9 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // eslint-disable-line no-undef
 import bindAll from 'lodash.bindall';
 import 'chromedriver'; // register path
 import webdriver from 'selenium-webdriver';
+import chrome from 'selenium-webdriver/chrome';
 
+import path from 'path';
 const {By, until, Button} = webdriver;
 
 const USE_HEADLESS = process.env.USE_HEADLESS !== 'no';
@@ -51,7 +53,7 @@ class SeleniumHelper {
 
         // Stub getUserMedia to always not allow access
         args.push('--use-fake-ui-for-media-stream=deny');
-
+        const downloadFolder = path.resolve(__dirname, '../'); // in /test dir
         chromeCapabilities.set('chromeOptions', {args});
         chromeCapabilities.setLoggingPrefs({
             performance: 'ALL'
@@ -59,6 +61,9 @@ class SeleniumHelper {
         this.driver = new webdriver.Builder()
             .forBrowser('chrome')
             .withCapabilities(chromeCapabilities)
+            .setChromeOptions(new chrome.Options()
+                .setUserPreferences({'download.default_directory': downloadFolder})
+            )
             .build();
         return this.driver;
     }

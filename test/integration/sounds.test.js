@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import SeleniumHelper from '../helpers/selenium-helper';
 
 const {
@@ -113,5 +114,18 @@ describe('Working with sounds', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
+    });
+
+    test('Exporting a sound', async () => {
+        await loadUri(uri);
+        await clickXpath('//button[@title="Try It"]');
+        await clickText('Sounds');
+        await rightClickText('Meow', scope.soundsTab);
+        await driver.sleep(500); // Wait for menu to come up
+        await clickText('export', scope.soundsTab);
+
+        const filePath = path.resolve(__dirname, '../Meow.wav');
+        expect(fs.existsSync(filePath)).toEqual(true);
+        fs.unlinkSync(filePath); // Clean up by deleting the download
     });
 });
