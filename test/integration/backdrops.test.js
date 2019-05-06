@@ -37,12 +37,11 @@ describe('Working with backdrops', () => {
         await el.sendKeys('blue');
         await clickText('Blue Sky'); // Adds the backdrop
 
-        // Make sure the stage is selected and the sound tab remains selected.
-        // This is different from Scratch2 which selected backdrop tab automatically
-        // See issue #3500
-        await clickText('pop', scope.soundsTab);
+        // The cat should stay selected on the sounds tab
+        await clickText('Meow', scope.soundsTab);
 
         // Make sure the backdrop was actually added by going to the backdrops tab
+        await clickText('Stage');
         await clickText('Backdrops');
         await clickText('Blue Sky', scope.costumesTab);
 

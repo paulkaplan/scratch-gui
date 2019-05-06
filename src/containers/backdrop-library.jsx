@@ -33,7 +33,7 @@ class BackdropLibrary extends React.Component {
             bitmapResolution: item.info.length > 2 ? item.info[2] : 1,
             skinId: null
         };
-        this.props.vm.setEditingTarget(this.props.stageID);
+        // Add the backdrop, but do not activate the Stage
         this.props.vm.addBackdrop(item.md5, vmBackdrop);
     }
     render () {
@@ -53,17 +53,7 @@ class BackdropLibrary extends React.Component {
 BackdropLibrary.propTypes = {
     intl: intlShape.isRequired,
     onRequestClose: PropTypes.func,
-    stageID: PropTypes.string.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
-const mapStateToProps = state => ({
-    stageID: state.scratchGui.targets.stage.id
-});
-
-const mapDispatchToProps = () => ({});
-
-export default injectIntl(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(BackdropLibrary));
+export default injectIntl(BackdropLibrary);
