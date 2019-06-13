@@ -261,7 +261,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onNewSpriteClick: e => {
         e.preventDefault();
-        dispatch(openSpriteLibrary());
+        if (typeof Android !== 'undefined' && Android !== null) {
+            Android.openSpriteLibrary();
+        } else {
+            dispatch(openSpriteLibrary());
+        }
     },
     onRequestCloseSpriteLibrary: () => {
         dispatch(closeSpriteLibrary());
