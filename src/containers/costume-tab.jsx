@@ -403,7 +403,11 @@ const mapDispatchToProps = dispatch => ({
     },
     onNewLibraryCostumeClick: e => {
         e.preventDefault();
-        dispatch(openCostumeLibrary());
+        if (typeof Android !== 'undefined' && Android !== null) {
+            Android.openCostumeLibrary();
+        } else {
+            dispatch(openCostumeLibrary());
+        }
     },
     onNewCostumeFromCameraClick: () => {
         dispatch(openCameraCapture());
