@@ -36,6 +36,7 @@ import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
 import vmManagerHOC from '../lib/vm-manager-hoc.jsx';
 import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 import costumeLibraryContent from '../lib/libraries/costumes.json';
+import spriteLibraryContent from '../lib/libraries/sprites.json';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
@@ -57,6 +58,9 @@ class GUI extends React.Component {
         if (this.props.onSetCostumeAdder) {
             this.props.onSetCostumeAdder(this.handleAddCostume.bind(this));
         }
+        if (this.props.onSetSpriteAdder) {
+            this.props.onSetSpriteAdder(this.handleAddSprite.bind(this));
+        }
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -74,6 +78,9 @@ class GUI extends React.Component {
     componentWillUnmount () {
         if (this.props.onSetCostumeAdder) {
             this.props.onSetCostumeAdder(null);
+        }
+        if (this.props.onSetSpriteAdder) {
+            this.props.onSetSpriteAdder(null);
         }
     }
     setReduxTitle (newTitle) {
@@ -110,6 +117,22 @@ class GUI extends React.Component {
             skinId: null
         };
         return this.props.vm.addCostumeFromLibrary(md5, vmCostume);
+    }
+    handleAddSprite (md5) {
+        let item;
+        for (const sprite of spriteLibraryContent) {
+            if (sprite.md5 === md5) {
+                item = sprite;
+                break;
+            }
+        }
+        if (!item) {
+            console.log(`Item not found! ${md5}`);
+            return;
+        }
+        return this.props.vm.addSprite(JSON.stringify(item.json)).then(() => { 
+            this.props.onActivateTab(BLOCKS_TAB_INDEX);
+        });
     }
     render () {
         if (this.props.isError) {
@@ -164,6 +187,7 @@ GUI.propTypes = {
     onProjectLoaded: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onSetCostumeAdder: PropTypes.func,
+    onSetSpriteAdder: PropTypes.func,
     onStorageInit: PropTypes.func,
     onUpdateProjectId: PropTypes.func,
     onUpdateProjectTitle: PropTypes.func,
