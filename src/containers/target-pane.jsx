@@ -263,10 +263,6 @@ const mapDispatchToProps = dispatch => ({
         e.preventDefault();
         if (typeof Android !== 'undefined' && Android !== null) {
             Android.openSpriteLibrary();
-            // Create the mouse out event on the thermometer menu
-            var event = document.createEvent('Event');
-            event.initEvent('touchstart', true, true);
-            document.dispatchEvent(event);
         } else {
             dispatch(openSpriteLibrary());
         }
