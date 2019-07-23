@@ -94,6 +94,7 @@ class GUI extends React.Component {
             onStorageInit,
             onUpdateProjectId,
             onUpdateReduxProjectTitle,
+            onVmInit,
             projectHost,
             projectId,
             projectTitle,
@@ -146,7 +147,7 @@ GUI.defaultProps = {
     onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
     onProjectLoaded: () => {},
     onUpdateProjectId: () => {},
-    onVmInit: () => {}
+    onVmInit: (/* vm */) => {}
 };
 
 const mapStateToProps = state => {
