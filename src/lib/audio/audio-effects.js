@@ -4,6 +4,8 @@ import VolumeEffect from './effects/volume-effect.js';
 import FadeEffect from './effects/fade-effect.js';
 import MuteEffect from './effects/mute-effect.js';
 
+import {SOUND_BYTE_LIMIT} from './audio-util';
+
 const effectTypes = {
     ROBOT: 'robot',
     REVERSE: 'reverse',
@@ -61,13 +63,23 @@ class AudioEffects {
         this.adjustedTrimStart = this.adjustedTrimStartSeconds / durationSeconds;
         this.adjustedTrimEnd = this.adjustedTrimEndSeconds / durationSeconds;
 
+        let outputSampleRate = buffer.sampleRate;
+        let outputSampleCount = sampleCount;
         if (window.OfflineAudioContext) {
-            this.audioContext = new window.OfflineAudioContext(1, sampleCount, buffer.sampleRate);
+            // Force low sample rate of 22khz if sound is longer than server limit
+            // This may not reduce the file size enough to save, but further compression
+            // will occur at encoding time (e.g. ADPCM, MP3...)
+            if (sampleCount > SOUND_BYTE_LIMIT) {
+                outputSampleRate = 22050;
+                outputSampleCount = sampleCount * outputSampleRate / buffer.sampleRate;
+            }
+            this.audioContext = new window.OfflineAudioContext(1, outputSampleCount, outputSampleRate);
         } else {
             // Need to use webkitOfflineAudioContext, which doesn't support all sample rates.
             // Resample by adjusting sample count to make room and set offline context to desired sample rate.
-            const sampleScale = 44100 / buffer.sampleRate;
-            this.audioContext = new window.webkitOfflineAudioContext(1, sampleScale * sampleCount, 44100);
+            outputSampleRate = 44100;
+            outputSampleCount = sampleCount * outputSampleRate / buffer.sampleRate;
+            this.audioContext = new window.webkitOfflineAudioContext(1, outputSampleCount, outputSampleRate);
         }
 
         // For the reverse effect we need to manually reverse the data into a new audio buffer
