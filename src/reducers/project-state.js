@@ -121,7 +121,8 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.CREATING_NEW) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                error: null
             });
         }
         return state;
@@ -170,7 +171,8 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.REMIXING) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                error: null
             });
         }
         return state;
@@ -180,7 +182,8 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.CREATING_COPY) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                error: null
             });
         }
         return state;
@@ -188,14 +191,16 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.AUTO_UPDATING ||
             state.loadingState === LoadingState.MANUAL_UPDATING) {
             return Object.assign({}, state, {
-                loadingState: LoadingState.SHOWING_WITH_ID
+                loadingState: LoadingState.SHOWING_WITH_ID,
+                error: null
             });
         }
         return state;
     case DONE_UPDATING_BEFORE_COPY:
         if (state.loadingState === LoadingState.UPDATING_BEFORE_COPY) {
             return Object.assign({}, state, {
-                loadingState: LoadingState.CREATING_COPY
+                loadingState: LoadingState.CREATING_COPY,
+                error: null
             });
         }
         return state;
@@ -203,7 +208,8 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.UPDATING_BEFORE_NEW) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_NEW_DEFAULT,
-                projectId: defaultProjectId
+                projectId: defaultProjectId,
+                error: null
             });
         }
         return state;

@@ -507,3 +507,42 @@ test('projectError encountered while in state FETCHING_WITH_ID results in ' +
     expect(resultState.projectId).toBe(null);
     expect(resultState.error).toEqual('Error string');
 });
+
+test('doneUpdatingProject should clear old error state', () => {
+    const startStates = [ // All the states from which doneUpdatingProject can be called
+        LoadingState.AUTO_UPDATING,
+        LoadingState.MANUAL_UPDATING,
+        LoadingState.UPDATING_BEFORE_COPY,
+        LoadingState.UPDATING_BEFORE_NEW
+    ];
+    for (const startState of startStates) {
+        const prevError = new Error();
+        const initialState = {
+            error: prevError,
+            projectId: '100',
+            loadingState: startState
+        };
+        const action = doneUpdatingProject(initialState.loadingState);
+        const resultState = projectStateReducer(initialState, action);
+        expect(resultState.error).toBe(null);
+    }
+});
+
+test('doneCreatingProject should clear old error state', () => {
+    const startStates = [ // All the states from which doneCreatingProject can be called
+        LoadingState.CREATING_NEW,
+        LoadingState.CREATING_COPY,
+        LoadingState.REMIXING
+    ];
+    for (const startState of startStates) {
+        const prevError = new Error();
+        const initialState = {
+            error: prevError,
+            projectId: '100',
+            loadingState: startState
+        };
+        const action = doneCreatingProject('new id', initialState.loadingState);
+        const resultState = projectStateReducer(initialState, action);
+        expect(resultState.error).toBe(null);
+    }
+});
